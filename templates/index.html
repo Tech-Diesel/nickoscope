@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="search_form" class="row intro-content text-center">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+        <br>
+        <form method="post">
+          <label for="username"></label>
+          <input name="username" placeholder="username" id="username" required>
+          <input style="margin-top: 5px;" type="submit" value="search">
+        </form>
+
+    </div>
+</div>
+
+
+<article id="results">
+    {% if results %}
+        Results for : <b>{{ username }}</b>
+        <br><br>
+
+        <table class="table" style="border: none;">
+            <tbody>
+                {% for x in results %}
+                    <tr>
+                        <td>{{ x|capitalize }}</td>  
+                        <td>-</td>
+                        {% if results[x] == "available" %}
+                            <td style="color: green;">{{ results[x]|capitalize }}</td>
+                            <td style="color: green;">&#x2713;</td>
+                        {% else %}
+                            <td style="color: red;">{{ results[x]|capitalize }}</td>
+                            <td style="color: red;">&#x2717;</td>
+                        {% endif %}
+                    </tr>    
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+</article>
+
+{% endblock content %}

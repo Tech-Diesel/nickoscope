@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="{{ DEFAULT_LANG }}">
+
+
+<head>
+
+    {% block head %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Nickoscope</title>  
+
+        <!-- Bootstrap Core && Clean blog theme CSS -->
+        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../static/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- My custom CSS -->
+        <link href="../static/css/my-custom.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    {% endblock head %}
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="#" target="_self">Nickoscope</a>
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <header class="intro-header" style="background-color: black; margin-bottom: 10px">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="page-heading">
+                        <h1>Nickoscope</h1>
+                        <span class="subheading">Search Usernames Availability</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <ul class="list-inline text-center">
+
+                        <li>
+                            <a href="https://github.com/geekyshacklebolt">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://twitter.com/ershivasaxena">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <p class="copyright text-muted">
+                        Powered by <a href="Flask" target="_blank">Flask</a>, that takes great advantage of <a href="https://palletsprojects.com/p/jinja/" target="_blank">Jinja</a> and <a href="http://python.org" target="_blank">Python</a><br>
+
+                        <hd style="color: black">Terms and Conditions</hd><br>
+                        &copy; 2020 Shiva Saxena (<a href="https://github.com/GeekyShacklebolt/nickoscope/blob/master/LICENSE" target="_blank">MIT License</a>)
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jquery core -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+    <!-- short custom script functions -->
+    <script type="text/javascript" charset="utf-8">
+
+    </script>
+
+</body>
+
+</html>
+
