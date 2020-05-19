@@ -20,10 +20,16 @@ sites_with_syntax_domain_username = {
     # TODO: Add more here.
 }
 
+sites_with_syntax_username_dot_domain = {
+    'wordpress': '.wordpress.com/',
+    # TODO: Add more here.
+}
+
+
 def check_on_sites_with_syntax_domain_username(username):
     """
     Function to check for the username availability on those sites that use
-    usernames in their URL direcly after their domain.
+    usernames in their URL direcly after their domain as endpoint.
 
     Valid example: https://twitter.com/<username>
 
@@ -45,6 +51,31 @@ def check_on_sites_with_syntax_domain_username(username):
             username_availability.update({site: NOT_AVAILABLE})
 
 
+def check_on_sites_with_syntax_username_dot_domain(username):
+    """
+    Function to check for the username availability on those sites that use
+    usernames in front of their domain as subdomain.
+
+    Valid example: https://<username>.wordpress.com
+
+    Invalid example: https://twitter.com/<username>
+
+    :arg username: Username to be search
+
+    :return: None
+
+    """
+    for site, url in sites_with_syntax_username_dot_domain.items():
+        username_availability.update({site: AVAILABLE})
+        url = 'https://' + username + url
+        # TODO: Add specific username validation as per the site if required.
+        resp = requests.head(url)
+        if(resp.status_code == 405):  # if HEAD method not allowed
+            resp = requests.get(url)
+        if(resp.status_code == 200):
+            username_availability.update({site: NOT_AVAILABLE})
+
+
 def check_username_availability(username):
     """
     Function to check the username availability on various groups of websites.
@@ -56,6 +87,7 @@ def check_username_availability(username):
     """
     # TODO: Add a general function to validate the username.
     check_on_sites_with_syntax_domain_username(username)
+    check_on_sites_with_syntax_username_dot_domain(username)
     # TODO: Add more functions to check the username availability on different
     # groups of websites.
 
