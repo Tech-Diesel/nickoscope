@@ -6,7 +6,7 @@
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
         <br>
-        <form method="post">
+        <form onsubmit="onloading()" method="post">
           <label for="username"></label>
           <input name="username" placeholder="username" id="username" required>
           <input style="margin-top: 5px;" type="submit" value="search">
@@ -15,6 +15,14 @@
     </div>
 </div>
 
+<div id="loading" class="text-center" style="display: none">
+    <br>
+    <img src="../static/img/searching.gif" alt="searching.gif">
+    <br>
+    <br>
+    This might take a few seconds.
+</div>
+<br>
 
 <article id="results">
     {% if results %}
@@ -38,6 +46,8 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <script> offloading(); </script>
 
     {% endif %}
 </article>

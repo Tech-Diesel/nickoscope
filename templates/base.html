@@ -112,6 +112,17 @@
     <!-- short custom script functions -->
     <script type="text/javascript" charset="utf-8">
 
+        function onloading() {
+            document.getElementById("results").style.display = 'none';
+            document.getElementById("loading").style.display = 'block';
+        }
+
+        function offloading() {
+            document.getElementById("results").style.display = 'block';
+            document.getElementById("loading").style.display = 'none';
+        }
+
+
     </script>
 
 </body>
