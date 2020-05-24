@@ -122,6 +122,17 @@
             document.getElementById("loading").style.display = 'none';
         }
 
+        {% if results %}
+            $(document).ready(function() {
+                $('html, body').scrollTop($("#search_form").offset().top);
+            });
+        {% endif %}
+
+        $("#search_form").submit(function() {
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#search_form").offset().top
+            }, 1000);
+        });
 
     </script>
 
