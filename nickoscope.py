@@ -97,6 +97,8 @@ def index():
     if request.method == 'POST':
         username = request.form['username']
         check_username_availability(username)
-        return render_template('index.html', results=username_availability, username=username)
+        return render_template(
+            'index.html', results=username_availability, username=username,
+        )
 
     return render_template('index.html')
