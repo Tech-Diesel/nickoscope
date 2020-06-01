@@ -1,0 +1,26 @@
+language: python
+sudo: false
+python:
+  - '3.8.2'
+
+os:
+  - linux
+
+before_cache:
+  - rm -f $HOME/.cache/pip/log/debug.log
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - flake8
+
+notifications:
+  email:
+    on_success: change  # [always|never|change]
+    on_failure: always  # [always|never|change]
+
