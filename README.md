@@ -1,9 +1,9 @@
 # Nickoscope
 [![Build Status](https://travis-ci.org/geekyshacklebolt/nickoscope.svg?branch=master)](https://travis-ci.org/geekyshacklebolt/nickoscope)
 
-A Flask app to find out usernames availablity on popular websites.
+A flask app to find out usernames availability on popular websites.
 
-The application is deployed on [Heroku](https://www.heroku.com) and available at: https://git.heroku.com/nickoscope.git
+The application is deployed on [Heroku](https://www.heroku.com) and available at: https://nickoscope.herokuapp.com/
 
 ### Thank you
 
