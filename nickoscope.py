@@ -31,7 +31,7 @@ def check_on_sites_with_syntax_domain_username(username):
     Function to check for the username availability on those sites that use
     usernames in their URL direcly after their domain as endpoint.
 
-    Valid example: https://twitter.com/<username>
+    Valid example: https://github.com/<username>
 
     Invalid example: https://askubunt.com/users/<userid>/<username>
 
@@ -45,7 +45,8 @@ def check_on_sites_with_syntax_domain_username(username):
         url = url + username + '/'
         # TODO: Add specific username validation as per the site if required.
         resp = requests.head(url)
-        if(resp.status_code == 405):  # if HEAD method not allowed
+        if(resp.status_code == 405 or resp.status_code == 301):
+            # if HEAD method not allowed or if Permanent redirect encountered
             resp = requests.get(url)
         if(resp.status_code == 200):
             username_availability.update({site: NOT_AVAILABLE})
@@ -70,7 +71,8 @@ def check_on_sites_with_syntax_username_dot_domain(username):
         url = 'https://' + username + url
         # TODO: Add specific username validation as per the site if required.
         resp = requests.head(url)
-        if(resp.status_code == 405):  # if HEAD method not allowed
+        if(resp.status_code == 405 or resp.status_code == 301):
+            # if HEAD method not allowed or if Permanent redirect encountered
             resp = requests.get(url)
         if(resp.status_code == 200):
             username_availability.update({site: NOT_AVAILABLE})
