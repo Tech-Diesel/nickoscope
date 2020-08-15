@@ -1,6 +1,6 @@
-## Current Version 0.0.0
+## Current Version 0.0.1
 
-### May 19, 2020
+### May 19, 2020 (v0.0.1)
 
 - Add searching support as follows:
     + It can now search for a username on some websites that use usernames in
