@@ -8,6 +8,12 @@ NOT_AVAILABLE = "not available"
 NOT_ALLOWED = "not allowed"
 COULD_NOT_FIND = "could'nt find"
 
+HTTP_STATUS = {
+    "OK": 200,
+    "MOVED_PERMANENTLY": 301,
+    "METHOD_NOT_ALLOWED": 405,
+}
+
 username_availability = {}
 
 sites_with_syntax_domain_username = {
@@ -45,10 +51,12 @@ def check_on_sites_with_syntax_domain_username(username):
         url = url + username + "/"
         # TODO: Add specific username validation as per the site if required.
         resp = requests.head(url)
-        if resp.status_code == 405 or resp.status_code == 301:
-            # if HEAD method not allowed or if Permanent redirect encountered
+        if (
+            resp.status_code == HTTP_STATUS["METHOD_NOT_ALLOWED"]
+            or resp.status_code == HTTP_STATUS["MOVED_PERMANENTLY"]
+        ):
             resp = requests.get(url)
-        if resp.status_code == 200:
+        if resp.status_code == HTTP_STATUS["OK"]:
             username_availability.update({site: NOT_AVAILABLE})
 
 
@@ -71,10 +79,12 @@ def check_on_sites_with_syntax_username_dot_domain(username):
         url = "https://" + username + url
         # TODO: Add specific username validation as per the site if required.
         resp = requests.head(url)
-        if resp.status_code == 405 or resp.status_code == 301:
-            # if HEAD method not allowed or if Permanent redirect encountered
+        if (
+            resp.status_code == HTTP_STATUS["METHOD_NOT_ALLOWED"]
+            or resp.status_code == HTTP_STATUS["MOVED_PERMANENTLY"]
+        ):
             resp = requests.get(url)
-        if resp.status_code == 200:
+        if resp.status_code == HTTP_STATUS["OK"]:
             username_availability.update({site: NOT_AVAILABLE})
 
 
