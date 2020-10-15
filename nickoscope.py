@@ -3,10 +3,12 @@ import requests
 
 app = Flask(__name__)
 
-AVAILABLE = "available"
-NOT_AVAILABLE = "not available"
-NOT_ALLOWED = "not allowed"
-COULD_NOT_FIND = "could'nt find"
+USERNAME_STATUS = {
+    "AVAILABLE": "available",
+    "NOT_AVAILABLE": "not available",
+    "NOT_ALLOWED": "not allowed",
+    "COULD_NOT_FIND": "could not find",
+}
 
 HTTP_STATUS = {
     "OK": 200,
@@ -47,7 +49,7 @@ def check_username_availability_on_sites_with_syntax_domain_username(username):
 
     """
     for site, url in sites_with_syntax_domain_username.items():
-        username_availability.update({site: AVAILABLE})
+        username_availability.update({site: USERNAME_STATUS["AVAILABLE"]})
         url = url + username + "/"
         # TODO: Add specific username validation as per the site if required.
         resp = requests.head(url)
@@ -57,7 +59,7 @@ def check_username_availability_on_sites_with_syntax_domain_username(username):
         ):
             resp = requests.get(url)
         if resp.status_code == HTTP_STATUS["OK"]:
-            username_availability.update({site: NOT_AVAILABLE})
+            username_availability.update({site: USERNAME_STATUS["NOT_AVAILABLE"]})
 
 
 def check_username_availability_on_sites_with_syntax_username_dot_domain(username):
@@ -75,7 +77,7 @@ def check_username_availability_on_sites_with_syntax_username_dot_domain(usernam
 
     """
     for site, url in sites_with_syntax_username_dot_domain.items():
-        username_availability.update({site: AVAILABLE})
+        username_availability.update({site: USERNAME_STATUS["AVAILABLE"]})
         url = "https://" + username + url
         # TODO: Add specific username validation as per the site if required.
         resp = requests.head(url)
@@ -85,7 +87,7 @@ def check_username_availability_on_sites_with_syntax_username_dot_domain(usernam
         ):
             resp = requests.get(url)
         if resp.status_code == HTTP_STATUS["OK"]:
-            username_availability.update({site: NOT_AVAILABLE})
+            username_availability.update({site: USERNAME_STATUS["NOT_AVAILABLE"]})
 
 
 def check_username_availability(username):
