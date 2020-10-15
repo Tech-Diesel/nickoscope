@@ -32,7 +32,7 @@ sites_with_syntax_username_dot_domain = {
 }
 
 
-def check_on_sites_with_syntax_domain_username(username):
+def check_username_availability_on_sites_with_syntax_domain_username(username):
     """
     Function to check for the username availability on those sites that use
     usernames in their URL direcly after their domain as endpoint.
@@ -60,7 +60,7 @@ def check_on_sites_with_syntax_domain_username(username):
             username_availability.update({site: NOT_AVAILABLE})
 
 
-def check_on_sites_with_syntax_username_dot_domain(username):
+def check_username_availability_on_sites_with_syntax_username_dot_domain(username):
     """
     Function to check for the username availability on those sites that use
     usernames in front of their domain as subdomain.
@@ -98,8 +98,8 @@ def check_username_availability(username):
 
     """
     # TODO: Add a general function to validate the username.
-    check_on_sites_with_syntax_domain_username(username)
-    check_on_sites_with_syntax_username_dot_domain(username)
+    check_username_availability_on_sites_with_syntax_domain_username(username)
+    check_username_availability_on_sites_with_syntax_username_dot_domain(username)
     # TODO: Add more functions to check the username availability on different
     # groups of websites.
 
