@@ -48,19 +48,21 @@ def check_username_availability_on_sites_with_syntax_domain_username(username):
     :return: None
 
     """
-    for site, url in sites_with_syntax_domain_username.items():
-        username_availability_on_each_site.update({site: USERNAME_STATUS["AVAILABLE"]})
+    for site_name, url in sites_with_syntax_domain_username.items():
+        username_availability_on_each_site.update(
+            {site_name: USERNAME_STATUS["AVAILABLE"]}
+        )
         url = url + username + "/"
         # TODO: Add specific username validation as per the site if required.
-        resp = requests.head(url)
+        http_response = requests.head(url)
         if (
-            resp.status_code == HTTP_STATUS["METHOD_NOT_ALLOWED"]
-            or resp.status_code == HTTP_STATUS["MOVED_PERMANENTLY"]
+            http_response.status_code == HTTP_STATUS["METHOD_NOT_ALLOWED"]
+            or http_response.status_code == HTTP_STATUS["MOVED_PERMANENTLY"]
         ):
-            resp = requests.get(url)
-        if resp.status_code == HTTP_STATUS["OK"]:
+            http_response = requests.get(url)
+        if http_response.status_code == HTTP_STATUS["OK"]:
             username_availability_on_each_site.update(
-                {site: USERNAME_STATUS["NOT_AVAILABLE"]}
+                {site_name: USERNAME_STATUS["NOT_AVAILABLE"]}
             )
 
 
@@ -78,19 +80,21 @@ def check_username_availability_on_sites_with_syntax_username_dot_domain(usernam
     :return: None
 
     """
-    for site, url in sites_with_syntax_username_dot_domain.items():
-        username_availability_on_each_site.update({site: USERNAME_STATUS["AVAILABLE"]})
+    for site_name, url in sites_with_syntax_username_dot_domain.items():
+        username_availability_on_each_site.update(
+            {site_name: USERNAME_STATUS["AVAILABLE"]}
+        )
         url = "https://" + username + url
         # TODO: Add specific username validation as per the site if required.
-        resp = requests.head(url)
+        http_response = requests.head(url)
         if (
-            resp.status_code == HTTP_STATUS["METHOD_NOT_ALLOWED"]
-            or resp.status_code == HTTP_STATUS["MOVED_PERMANENTLY"]
+            http_response.status_code == HTTP_STATUS["METHOD_NOT_ALLOWED"]
+            or http_response.status_code == HTTP_STATUS["MOVED_PERMANENTLY"]
         ):
-            resp = requests.get(url)
-        if resp.status_code == HTTP_STATUS["OK"]:
+            http_response = requests.get(url)
+        if http_response.status_code == HTTP_STATUS["OK"]:
             username_availability_on_each_site.update(
-                {site: USERNAME_STATUS["NOT_AVAILABLE"]}
+                {site_name: USERNAME_STATUS["NOT_AVAILABLE"]}
             )
 
 
