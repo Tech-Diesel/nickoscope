@@ -3,12 +3,18 @@ import requests
 
 app = Flask(__name__)
 
-AVAILABLE = "available"
-NOT_AVAILABLE = "not available"
-NOT_ALLOWED = "not allowed"
-COULD_NOT_FIND = "could'nt find"
+USERNAME_STATUS = {
+    "AVAILABLE": "available",
+    "NOT_AVAILABLE": "not available",
+    "NOT_ALLOWED": "not allowed",
+    "COULD_NOT_FIND": "could not find",
+}
 
-username_availability = {}
+HTTP_STATUS_OK = 200
+HTTP_STATUS_MOVED_PERMANENTLY = 301
+HTTP_STATUS_METHOD_NOT_ALLOWED = 405
+
+username_availability_on_each_site = {}
 
 sites_with_syntax_domain_username = {
     "twitter": "https://twitter.com/",
@@ -26,7 +32,7 @@ sites_with_syntax_username_dot_domain = {
 }
 
 
-def check_on_sites_with_syntax_domain_username(username):
+def check_username_availability_on_sites_with_syntax_domain_username(username):
     """
     Function to check for the username availability on those sites that use
     usernames in their URL direcly after their domain as endpoint.
@@ -40,19 +46,25 @@ def check_on_sites_with_syntax_domain_username(username):
     :return: None
 
     """
-    for site, url in sites_with_syntax_domain_username.items():
-        username_availability.update({site: AVAILABLE})
+    for site_name, url in sites_with_syntax_domain_username.items():
+        username_availability_on_each_site.update(
+            {site_name: USERNAME_STATUS["AVAILABLE"]}
+        )
         url = url + username + "/"
         # TODO: Add specific username validation as per the site if required.
-        resp = requests.head(url)
-        if resp.status_code == 405 or resp.status_code == 301:
-            # if HEAD method not allowed or if Permanent redirect encountered
-            resp = requests.get(url)
-        if resp.status_code == 200:
-            username_availability.update({site: NOT_AVAILABLE})
+        http_response = requests.head(url)
+        if (
+            http_response.status_code == HTTP_STATUS_METHOD_NOT_ALLOWED
+            or http_response.status_code == HTTP_STATUS_MOVED_PERMANENTLY
+        ):
+            http_response = requests.get(url)
+        if http_response.status_code == HTTP_STATUS_OK:
+            username_availability_on_each_site.update(
+                {site_name: USERNAME_STATUS["NOT_AVAILABLE"]}
+            )
 
 
-def check_on_sites_with_syntax_username_dot_domain(username):
+def check_username_availability_on_sites_with_syntax_username_dot_domain(username):
     """
     Function to check for the username availability on those sites that use
     usernames in front of their domain as subdomain.
@@ -66,16 +78,22 @@ def check_on_sites_with_syntax_username_dot_domain(username):
     :return: None
 
     """
-    for site, url in sites_with_syntax_username_dot_domain.items():
-        username_availability.update({site: AVAILABLE})
+    for site_name, url in sites_with_syntax_username_dot_domain.items():
+        username_availability_on_each_site.update(
+            {site_name: USERNAME_STATUS["AVAILABLE"]}
+        )
         url = "https://" + username + url
         # TODO: Add specific username validation as per the site if required.
-        resp = requests.head(url)
-        if resp.status_code == 405 or resp.status_code == 301:
-            # if HEAD method not allowed or if Permanent redirect encountered
-            resp = requests.get(url)
-        if resp.status_code == 200:
-            username_availability.update({site: NOT_AVAILABLE})
+        http_response = requests.head(url)
+        if (
+            http_response.status_code == HTTP_STATUS_METHOD_NOT_ALLOWED
+            or http_response.status_code == HTTP_STATUS_MOVED_PERMANENTLY
+        ):
+            http_response = requests.get(url)
+        if http_response.status_code == HTTP_STATUS_OK:
+            username_availability_on_each_site.update(
+                {site_name: USERNAME_STATUS["NOT_AVAILABLE"]}
+            )
 
 
 def check_username_availability(username):
@@ -88,8 +106,8 @@ def check_username_availability(username):
 
     """
     # TODO: Add a general function to validate the username.
-    check_on_sites_with_syntax_domain_username(username)
-    check_on_sites_with_syntax_username_dot_domain(username)
+    check_username_availability_on_sites_with_syntax_domain_username(username)
+    check_username_availability_on_sites_with_syntax_username_dot_domain(username)
     # TODO: Add more functions to check the username availability on different
     # groups of websites.
 
@@ -101,7 +119,7 @@ def index():
         check_username_availability(username)
         return render_template(
             "index.html",
-            results=username_availability,
+            results=username_availability_on_each_site,
             username=username,
         )
 
