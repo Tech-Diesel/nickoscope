@@ -10,11 +10,9 @@ USERNAME_STATUS = {
     "COULD_NOT_FIND": "could not find",
 }
 
-HTTP_STATUS = {
-    "OK": 200,
-    "MOVED_PERMANENTLY": 301,
-    "METHOD_NOT_ALLOWED": 405,
-}
+HTTP_STATUS_OK = 200
+HTTP_STATUS_MOVED_PERMANENTLY = 301
+HTTP_STATUS_METHOD_NOT_ALLOWED = 405
 
 username_availability_on_each_site = {}
 
@@ -56,11 +54,11 @@ def check_username_availability_on_sites_with_syntax_domain_username(username):
         # TODO: Add specific username validation as per the site if required.
         http_response = requests.head(url)
         if (
-            http_response.status_code == HTTP_STATUS["METHOD_NOT_ALLOWED"]
-            or http_response.status_code == HTTP_STATUS["MOVED_PERMANENTLY"]
+            http_response.status_code == HTTP_STATUS_METHOD_NOT_ALLOWED
+            or http_response.status_code == HTTP_STATUS_MOVED_PERMANENTLY
         ):
             http_response = requests.get(url)
-        if http_response.status_code == HTTP_STATUS["OK"]:
+        if http_response.status_code == HTTP_STATUS_OK:
             username_availability_on_each_site.update(
                 {site_name: USERNAME_STATUS["NOT_AVAILABLE"]}
             )
@@ -88,11 +86,11 @@ def check_username_availability_on_sites_with_syntax_username_dot_domain(usernam
         # TODO: Add specific username validation as per the site if required.
         http_response = requests.head(url)
         if (
-            http_response.status_code == HTTP_STATUS["METHOD_NOT_ALLOWED"]
-            or http_response.status_code == HTTP_STATUS["MOVED_PERMANENTLY"]
+            http_response.status_code == HTTP_STATUS_METHOD_NOT_ALLOWED
+            or http_response.status_code == HTTP_STATUS_MOVED_PERMANENTLY
         ):
             http_response = requests.get(url)
-        if http_response.status_code == HTTP_STATUS["OK"]:
+        if http_response.status_code == HTTP_STATUS_OK:
             username_availability_on_each_site.update(
                 {site_name: USERNAME_STATUS["NOT_AVAILABLE"]}
             )
