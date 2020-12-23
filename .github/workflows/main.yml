@@ -3,7 +3,7 @@ name: Run Tests for Nickoscope
 on: [push, pull_request]
 
 jobs:
-  - build-and-run-tests:
+  build-and-run-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Get Action V2
